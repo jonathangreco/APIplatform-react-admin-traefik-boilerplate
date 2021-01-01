@@ -13,8 +13,8 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - .docker/cert.pem:/certs:ro
-      - .docker/traefik:/etc/traefik:ro
+      - ./api/.docker/cert.pem:/certs:ro
+      - ./api/.docker/traefik:/etc/traefik:ro
     labels:
       - traefik.http.routers.traefik_test.rule=Host(`traefik.docker.localhost`)
       - traefik.http.services.traefik_test.loadbalancer.server.port=8080
@@ -28,12 +28,12 @@ services:
     image: webdevops/php-nginx-dev:7.4
     container_name: api
     volumes:
-      - .:/rootapp
-      - ./.docker/nginx/docker-nginx.conf:/opt/docker/etc/nginx/vhost.conf
-      - .docker/cert.pem:/certs:ro
+      - ./api/:/rootapp
+      - ./api/.docker/nginx/docker-nginx.conf:/opt/docker/etc/nginx/vhost.conf
+      - ./api/.docker/cert.pem:/certs:ro
     working_dir: /rootapp
     env_file:
-      - ./.env
+      - ./api/.env
     environment:
       # PHP config
       # @see https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-nginx-dev.html#environment-variables
