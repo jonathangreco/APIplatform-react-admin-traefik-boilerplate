@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+  traefik:
+    # Aller sur http://localhost:8080/api/rawdata pour visionner si traefik fonctionne et ce qu'il configure
+    # http://localhost:8080/dashboard pour voir le dashboard de traefik et vérifier que tout fonctionne
+    image: traefik:v2.3
+    container_name: traefik
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .docker/cert.pem:/certs:ro
+      - .docker/traefik:/etc/traefik:ro
+    labels:
+      - traefik.http.routers.traefik_test.rule=Host(`traefik.docker.localhost`)
+      - traefik.http.services.traefik_test.loadbalancer.server.port=8080
+      - traefik.http.middlewares.tls-redirectscheme.redirectscheme.scheme=https
+      - traefik.http.middlewares.tls-redirectscheme.redirectscheme.permanent=true
+    networks:
+      - reverse_proxy
+
+  api:
+    # @see https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-nginx-dev.html#customization
+    image: webdevops/php-nginx-dev:7.4
+    container_name: api
+    volumes:
+      - .:/rootapp
+      - ./.docker/nginx/docker-nginx.conf:/opt/docker/etc/nginx/vhost.conf
+      - .docker/cert.pem:/certs:ro
+    working_dir: /rootapp
+    env_file:
+      - ./.env
+    environment:
+      # PHP config
+      # @see https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-nginx-dev.html#environment-variables
+      PHP_DATE_TIMEZONE: "Europe/Paris"
+      PHP_DISPLAY_ERRORS: "on"
+      PHP_MEMORY_LIMIT: 1024M
+      PHP_MAX_EXECUTION_TIME: 86400
+      PHP_REQUEST_TERMINATE_TIMEOUT: 86400
+      PHP_POST_MAX_SIZE: 50M
+      PHP_UPLOAD_MAX_FILESIZE: 100M
+      PHP_OPCACHE_REVALIDATE_FREQ: 0
+      php.xdebug.var_display_max_depth: 10
+      php.xdebug.var_display_max_data: 2048
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`api.docker.localhost`)
+      - traefik.http.routers.api.entrypoints=http
+      - traefik.http.routers.api-secure.rule=Host(`api.docker.localhost`)
+      - traefik.http.routers.api-secure.tls=true
+      - traefik.http.routers.api-secure.entrypoints=https
+      - traefik.docker.network=traefik_default
+    networks:
+      - reverse_proxy
+networks:
+  reverse_proxy:
+    external:
+      name: traefik_default
