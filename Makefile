@@ -1,4 +1,4 @@
-.PHONY: stopa2 start bash stop restart
+.PHONY: stopa2 start bash stop restart log phplog
 
 STACK_NAME=api
 php_container_id = $(shell docker ps --filter name="$(STACK_NAME)" -q)
@@ -18,4 +18,6 @@ stop:
 restart:
 	docker-compose down && docker-compose up -d
 
+log:
+	docker logs -f --details $(php_container_id)
 
