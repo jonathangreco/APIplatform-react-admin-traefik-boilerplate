@@ -19,9 +19,8 @@
     exposedByDefault = true
     swarmMode = false
 
-# EntryPoints
 [entryPoints]
   [entryPoints.http]
-    address = ":80"
+  address = ":80"
   [entryPoints.https]
-    address = ":443"
+  address = ":443"

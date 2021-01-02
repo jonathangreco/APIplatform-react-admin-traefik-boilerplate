@@ -6,6 +6,7 @@ services:
     # http://localhost:8080/dashboard pour voir le dashboard de traefik et vérifier que tout fonctionne
     image: traefik:v2.3
     container_name: traefik
+    restart: always
     command: --api.insecure=true --providers.docker
     ports:
       - "80:80"
@@ -55,8 +56,62 @@ services:
       - traefik.http.routers.api-secure.tls=true
       - traefik.http.routers.api-secure.entrypoints=https
       - traefik.docker.network=traefik_default
+      - traefik.port=444
     networks:
       - reverse_proxy
+
+  client:
+    container_name: client
+    # Use a static website hosting service in production
+    # See https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    stdin_open: true # https://github.com/facebook/create-react-app/issues/8688
+    env_file:
+      - ./client/.env
+    volumes:
+      - ./client:/app:rw,cached
+      - /app/node_modules
+    ports:
+      - "3001:3001"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.client.rule=Host(`front.docker.localhost`)
+      - traefik.http.routers.client.entrypoints=http
+      - traefik.docker.network=traefik_default
+      - traefik.port=3001
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - reverse_proxy
+
+  admin:
+    container_name: admin
+    # Use a static website hosting service in production
+    # See https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    stdin_open: true # https://github.com/facebook/create-react-app/issues/8688
+    env_file:
+      - ./admin/.env
+    volumes:
+      - ./admin:/app:rw,cached
+      - /app/node_modules
+    ports:
+      - "3003:3003"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.admin.rule=Host(`admin.docker.localhost`)
+      - traefik.http.routers.admin.entrypoints=http
+      - traefik.docker.network=traefik_default
+      - traefik.port=3003
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - reverse_proxy
+
 networks:
   reverse_proxy:
     external:
