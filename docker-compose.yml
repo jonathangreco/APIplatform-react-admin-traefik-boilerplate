@@ -28,6 +28,8 @@ services:
     # @see https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-nginx-dev.html#customization
     image: webdevops/php-nginx-dev:7.4
     container_name: api
+    depends_on:
+      - mysql
     volumes:
       - ./api/:/rootapp
       - ./api/.docker/nginx/docker-nginx.conf:/opt/docker/etc/nginx/vhost.conf
@@ -112,7 +114,26 @@ services:
     networks:
       - reverse_proxy
 
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=emoxa
+      - MYSQL_DATABASE=api
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./api/.docker/mysql:/etc/mysql/conf.d"
+    networks:
+      - reverse_proxy
+
 networks:
   reverse_proxy:
     external:
       name: traefik_default
+
+volumes:
+  db_data:

@@ -1,0 +1,70 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="App\Domain\User\User" table="usr_users">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="created" type="datetime">
+            <options>
+                <option name="comment">Because anything is created at a moment</option>
+            </options>
+        </field>
+        <field name="deleted" type="datetime" nullable="true">
+            <options>
+                <option name="comment">If null it's active, if it's filled and passed, it's not</option>
+            </options>
+        </field>
+
+        <field name="email" length="150" nullable="true" unique="true">
+            <options>
+                <option name="comment">If null it's active, if it's filled and passed, it's not</option>
+            </options>
+        </field>
+
+        <field name="username" length="40" nullable="true">
+            <options>
+                <option name="comment">Username</option>
+            </options>
+        </field>
+
+        <field name="hashedPassword" length="64">
+            <options>
+                <option name="comment">Password - self documented</option>
+            </options>
+        </field>
+
+        <field name="locale" length="2" nullable="true">
+            <options>
+                <option name="comment">Locale of the user, defined in user's preferences</option>
+            </options>
+        </field>
+
+        <field name="resetToken" length="64" nullable="true">
+            <options>
+                <option name="comment">Reset password token</option>
+            </options>
+        </field>
+        <many-to-many field="roles" target-entity="App\Domain\User\Role">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+            <join-table name="usr_users_groups">
+                <join-columns>
+                    <join-column name="user_id" nullable="false"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="group_id" on-delete="CASCADE"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+        <field name="timezone" nullable="true">
+            <options>
+                <option name="default">Europe/Paris</option>
+                <option name="comment">Timezone of the user, defined in user's preferences default to Europe/Paris</option>
+            </options>
+        </field>
+    </entity>
+</doctrine-mapping>
