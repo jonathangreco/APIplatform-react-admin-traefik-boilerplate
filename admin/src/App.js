@@ -1,15 +1,8 @@
 import * as React from "react";
-import { Admin, Resource, ListGuesser } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
-import { HydraAdmin, ResourceGuesser} from "@api-platform/admin";
-
-//const dataProvider = jsonServerProvider(process.env.REACT_APP_API_URL);
-//const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+import { HydraAdmin } from '@api-platform/admin';
 
 const App = () => (
-    <HydraAdmin entrypoint="https://jsonplaceholder.typicode.com">
-        <Resource name={"users"} list={ListGuesser}/>
-    </HydraAdmin>
+    <HydraAdmin entrypoint={process.env.REACT_APP_API_URL}/>
 );
 
 export default App;

@@ -7,10 +7,14 @@ declare(strict_types = 1);
 
 namespace App\Domain\Share\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 trait NameTrait
 {
     /**
      * @var string
+     * @Groups({"read"})
      */
     private $name;
 
