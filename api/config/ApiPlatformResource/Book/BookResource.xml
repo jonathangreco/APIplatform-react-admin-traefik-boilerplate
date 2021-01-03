@@ -1,0 +1,23 @@
+<resources xmlns="https://api-platform.com/schema/metadata"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="https://api-platform.com/schema/metadata
+           https://api-platform.com/schema/metadata/metadata-2.0.xsd">
+    <resource class="App\Domain\Book\Book">
+        <attribute name="formats">
+            <attribute>jsonld</attribute> <!-- format already defined in the config -->
+            <attribute name="csv">text/csv</attribute>
+            <attribute name="json">application/json</attribute>
+        </attribute>
+
+        <subresourceOperations>
+            <subresourceOperation name="books">
+                <attribute name="method">GET</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">
+                        <attribute>read</attribute>
+                    </attribute>
+                </attribute>
+            </subresourceOperation>
+        </subresourceOperations>
+    </resource>
+</resources>

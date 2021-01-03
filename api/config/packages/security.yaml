@@ -16,25 +16,26 @@ security:
             pattern:  ^/api
             stateless: true
             anonymous: true
-            form_login:
-                check_path: /api/login
-                username_parameter: email
-                password_parameter: password
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-                require_previous_session: false
+            #form_login:
+            #    check_path: /api/login
+            #    username_parameter: email
+            #    password_parameter: password
+            #    success_handler: lexik_jwt_authentication.handler.authentication_success
+            #    failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            #    require_previous_session: false
         main:
             pattern:  ^/
             anonymous: ~
             logout:
                 path: /logout
-                target: /login
+                target: /api/login
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/api/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user/*, roles: ROLE_USER }
         - { path: ^/manager/*, roles: ROLE_USER }
         - { path: ^/configure/*, roles: ROLE_ADMIN }

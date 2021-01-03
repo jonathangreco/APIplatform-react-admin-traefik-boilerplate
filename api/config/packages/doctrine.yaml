@@ -19,3 +19,8 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/config/mapping/User'
                 prefix: 'App\Domain\User'
+            BookDomain:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/mapping/Book'
+                prefix: 'App\Domain\Book'

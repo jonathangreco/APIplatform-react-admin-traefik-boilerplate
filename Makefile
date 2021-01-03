@@ -4,7 +4,7 @@ STACK_NAME=api
 php_container_id = $(shell docker ps --filter name="$(STACK_NAME)" -q)
 
 stopa2:
-	sudo service apache2 stop
+	sudo service apache2 stop && sudo service mysql stop
 
 start:
 	docker-compose up -d ${c}
@@ -20,4 +20,7 @@ restart:
 
 log:
 	docker logs -f --details $(php_container_id)
+
+build-admin:
+	docker-compose up -d --build admin
 

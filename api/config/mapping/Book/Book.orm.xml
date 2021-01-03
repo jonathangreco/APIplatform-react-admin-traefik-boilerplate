@@ -1,0 +1,26 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="App\Domain\Book\Book" table="bk_book">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="created" type="datetime">
+            <options>
+                <option name="comment">Because anything is created at a moment</option>
+            </options>
+        </field>
+        <field name="deleted" type="datetime" nullable="true">
+            <options>
+                <option name="comment">If null it's active, if it's filled and passed, it's not</option>
+            </options>
+        </field>
+        <field name="name" type="string" column="name" length="150" precision="0" scale="0" nullable="false">
+            <options>
+                <option name="comment">Name of the book</option>
+            </options>
+        </field>
+        <field name="description" type="string" column="description" length="255" precision="0" scale="0" nullable="false"/>
+    </entity>
+</doctrine-mapping>
