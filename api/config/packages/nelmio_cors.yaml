@@ -4,15 +4,15 @@ nelmio_cors:
         allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
         allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
         allow_headers: ['Content-Type', 'Authorization']
-        expose_headers: [ 'X-Total-Count', 'Content-Range' , 'Link']
+        expose_headers: [ 'Link']
         max_age: 3600
     paths:
         '^/':
             origin_regex: true
             allow_credentials: true
             allow_origin: [ '^http://admin.docker.localhost' ]
-            allow_headers: [ 'Content-Type', 'Authorization', 'X-Custom-Auth', 'X-Total-Count', 'Content-Range' ]
+            allow_headers: [ 'Content-Type', 'Authorization']
             allow_methods: [ 'POST', 'PUT', 'GET', 'DELETE' ]
-            expose_headers: [ 'X-Total-Count', 'Content-Range', 'Link']
+            expose_headers: [ 'Link']
             forced_allow_origin_value: ~
             max_age: 3600

@@ -12,30 +12,37 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         # Api will be stateless, no token expected because no authentication
+
+        api_login:
+            pattern: /api/login
+            stateless: true
+            context: api
+            anonymous: true
+            provider: users
+            form_login:
+                check_path: /api/login
+                username_parameter: email
+                password_parameter: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
         api:
-            pattern:  ^/api
+            provider: users
+            context: api
+            pattern: ^/api
             stateless: true
             anonymous: true
-            #form_login:
-            #    check_path: /api/login
-            #    username_parameter: email
-            #    password_parameter: password
-            #    success_handler: lexik_jwt_authentication.handler.authentication_success
-            #    failure_handler: lexik_jwt_authentication.handler.authentication_failure
-            #    require_previous_session: false
-        main:
-            pattern:  ^/
-            anonymous: ~
-            logout:
-                path: /logout
-                target: /api/login
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/docs, roles: ROLE_USER }
+        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/api/*, roles: ROLE_USER }
         - { path: ^/user/*, roles: ROLE_USER }
         - { path: ^/manager/*, roles: ROLE_USER }
         - { path: ^/configure/*, roles: ROLE_ADMIN }

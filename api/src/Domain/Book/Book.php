@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
+ *     normalizationContext={"groups"={"book"}},
  *     itemOperations={
  *         "get",
  *         "delete",
@@ -37,30 +38,30 @@ class Book implements BookViewInterface
      * @var string
      * @Groups("book")
      */
-    public string $name;
+    private string $name;
 
     /**
      * @var \DateTime
      * @Groups("book")
      */
-    public $created;
+    private $created;
 
     /**
      * @var \DateTimeImmutable
      * @Groups("book")
      */
-    public $deleted;
+    private $deleted;
 
     /**
      * @var string
      * @Groups("book")
      */
-    public $description;
+    private $description;
 
     /**
      * @return null|string
      */
-    public function description(): ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -76,7 +77,7 @@ class Book implements BookViewInterface
     /**
      * @return mixed
      */
-    public function deleted(): ?\DateTimeInterface
+    public function getDeleted(): ?\DateTimeInterface
     {
         return $this->deleted;
     }
@@ -94,7 +95,7 @@ class Book implements BookViewInterface
     /**
      * @return mixed
      */
-    public function created(): ?\DateTime
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
@@ -130,7 +131,7 @@ class Book implements BookViewInterface
     /**
      * @return null|string
      */
-    public function name(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }

@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  traefik:
+  traefikk:
     # Aller sur http://localhost:8080/api/rawdata pour visionner si traefik fonctionne et ce qu'il configure
     # http://localhost:8080/dashboard pour voir le dashboard de traefik et vérifier que tout fonctionne
     image: traefik:v2.3
-    container_name: traefik
+    container_name: traefikk
     restart: always
     command: --api.insecure=true --providers.docker
     ports:

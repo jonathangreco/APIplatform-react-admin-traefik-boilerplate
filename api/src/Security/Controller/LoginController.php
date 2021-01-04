@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController
 {
     /**
-     * @Route("/api/login", name="login", methods={"GET", "POST"})
+     * @Route("/api/login", name="login", methods={"POST"})
      * @param AuthenticationUtils $authUtils
      * @return Response
      */
@@ -22,6 +22,6 @@ class LoginController
     {
         $exception = $authUtils->getLastAuthenticationError();
 
-        return new JsonResponse(["success" => !$exception, "message" => $exception ? $exception->getMessage(): null]);
+        return new JsonResponse(["success" => $exception ? false : true, "message" => $exception ? $exception->getMessage(): null]);
     }
 }
