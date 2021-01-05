@@ -4,7 +4,7 @@ import { HydraAdmin, ResourceGuesser, hydraDataProvider as baseHydraDataProvider
 import parseHydraDocumentation from "@api-platform/api-doc-parser/lib/hydra/parseHydraDocumentation";
 import authProvider from "./Auth/AuthProvider";
 
-const entrypoint = `${process.env.REACT_APP_API_URL}/docs`;
+const entrypoint = `${process.env.REACT_APP_API_URL}`;
 const getHeaders = () => localStorage.getItem("token") ? {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
 } : {};
