@@ -29,7 +29,7 @@ to use and develop on.
 
 ## Endpoints
 ### api.docker.localhost (accesible with postman)
-- `/login` (POST) for a JWT authentication
+- `/api/login` (POST) for a JWT authentication
 - Create user by command LINE WITH : 
    `bin/console app:create-user <email> <password> <username> <role>`
   
