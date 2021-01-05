@@ -18,6 +18,15 @@ The idea with this is to have one project for both front and back on top of
 API first paradigm. I keep the project simple with the aim to be comfortable
 to use and develop on.
 
+## Installation
+
+- `git clone git@github.com:jonathangreco/SF5-react-boilerplate.git`
+- `cd SF5-boilerplate-react`
+- `make start`
+- Go get a tea.
+- Cleanup Book stuff (dummy example) when you ready to code your app
+- Enjoy and give feedback or open issues !
+
 ## Endpoints
 ### api.docker.localhost (accesible with postman)
 - `/login` (POST) for a JWT authentication
