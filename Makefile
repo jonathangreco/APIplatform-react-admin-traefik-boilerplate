@@ -21,6 +21,6 @@ restart:
 log:
 	docker logs -f --details $(php_container_id)
 
-build-admin:
-	docker-compose up -d --build admin
+build:
+	docker-compose up -d --build ${c}
 
