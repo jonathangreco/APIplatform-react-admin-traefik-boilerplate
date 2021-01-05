@@ -1,26 +1,29 @@
-.PHONY: stopa2 start bash stop restart log phplog
+.PHONY: stopa2 start bash stop restart log phplog help
 
 STACK_NAME=api
 php_container_id = $(shell docker ps --filter name="$(STACK_NAME)" -q)
 
-stopa2:
+stopa2: ## for those who have apache2 and mysql running on host
 	sudo service apache2 stop && sudo service mysql stop
 
-start:
+start: ## spin up all container or specific one with c=<container_name>
 	docker-compose up -d ${c}
 
-bash:
+bash: ## bash in the php (api) container
 	docker exec -it $(php_container_id) bash
 
-stop:
+stop: ## stop the environment it's not as usefull as docker restart
 	docker-compose down
 
-restart:
-	docker-compose down && docker-compose up -d
+restart: ## restart environment
+	make stop && docker-compose up -d
 
-log:
+log: ## log the php output, nginx is configured to stdout error logs there
 	docker logs -f --details $(php_container_id)
 
-build:
+build: ## build a container in particular with "c=<container_name>" : make build c=admin
 	docker-compose up -d --build ${c}
 
+
+help: ## Display this help message
+	@cat $(MAKEFILE_LIST) | grep -e "^[a-zA-Z_\-]*: *.*## *" | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
