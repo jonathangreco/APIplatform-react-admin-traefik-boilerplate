@@ -19,9 +19,9 @@ API first paradigm. I keep the project simple with the aim to be comfortable
 to use and develop on.
 
 ## Installation
-
-- `git clone git@github.com:jonathangreco/SF5-react-boilerplate.git`
-- `cd SF5-boilerplate-react`
+I advise you rename it when cloning :
+- `git clone git@github.com:jonathangreco/APIplatform-react-admin-traefik-boilerplate.git`
+- `cd <whatever you put for a name>`
 - `make start`
 - Go get a tea.
 - Cleanup Book stuff (dummy example) when you ready to code your app
