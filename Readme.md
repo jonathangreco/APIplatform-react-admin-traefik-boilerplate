@@ -27,12 +27,33 @@ I advise you rename it when cloning :
 - Cleanup Book stuff (dummy example) when you ready to code your app
 - Enjoy and give feedback or open issues !
 
+### Api container
+install vendor
+populate an .env.local with at least this values (adapat it from your context)
+
+```
+DATABASE_URL="mysql://root:password@mysql:3306/database"
+
+
+CORS_ALLOW_ORIGIN='^https?://(admin|front.docker.localhost)?$'
+
+###> symfony/framework-bundle ###
+APP_ENV=dev
+APP_SECRET=your_secret
+###< symfony/framework-bundle ###
+
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=9c1f2e2fa339bfe93b094b5b1e2f9b4f
+
+```
+
 ## Endpoints
 ### api.docker.localhost (accesible with postman)
 - `/api/login` (POST) for a JWT authentication
-- Create user by command LINE WITH : 
-   `bin/console app:create-user <email> <password> <username> <role>`
-  
+- Create user by command LINE WITH :
+  `bin/console app:create-user <email> <password> <username> <role>`
+
 ### admin.docker.localhost (require auth)
 - create a user first then log in there
 
@@ -43,7 +64,7 @@ I advise you rename it when cloning :
 ## Monolog
 - get a log file for your domain with the domain handler
 
-just put : 
+just put :
 ```PHP
    public function __construct(\Psr\Log\LoggerInterface $domainLogger)
    {

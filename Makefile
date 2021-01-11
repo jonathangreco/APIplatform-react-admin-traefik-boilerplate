@@ -6,8 +6,14 @@ php_container_id = $(shell docker ps --filter name="$(STACK_NAME)" -q)
 stopa2: ## for those who have apache2 and mysql running on host
 	sudo service apache2 stop && sudo service mysql stop
 
+build-client: ## Allow from the first install to build the container
+	cd client && npm install --silent
+
+build-admin: ## Allow from the first install to build the container
+	cd admin && yarn install --silent
+
 start: ## spin up all container or specific one with c=<container_name>
-	docker-compose up -d ${c}
+	make build-client && make build-admin && docker-compose up -d ${c}
 
 bash: ## bash in the php (api) container
 	docker exec -it $(php_container_id) bash
