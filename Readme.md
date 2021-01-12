@@ -55,6 +55,8 @@ JWT_PASSPHRASE=9c1f2e2fa339bfe93b094b5b1e2f9b4f
   `bin/console app:create-user <email> <password> <username> <role>`
 
 ### admin.docker.localhost (require auth)
+- Apply migrations (make migrate)
+- Create your ROLE in the DB (ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN)
 - create a user first then log in there
 
 ### front.docker.localhost
