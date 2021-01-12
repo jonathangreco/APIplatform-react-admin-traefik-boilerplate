@@ -36,3 +36,6 @@ build: ## build a container in particular with "c=<container_name>" : make build
 
 help: ## Display this help message
 	@cat $(MAKEFILE_LIST) | grep -e "^[a-zA-Z_\-]*: *.*## *" | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
+
+force-recreate: ## May the force recreate containers (usefull when links are broken)
+	docker-compose up --force-recreate
