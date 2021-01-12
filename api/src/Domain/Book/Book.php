@@ -75,7 +75,25 @@ class Book implements BookViewInterface
     }
 
     /**
-     * @return mixed
+     * @return \DateTimeInterface
+     */
+    public function getCreated(): \DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param \DateTimeInterface $created
+     * @return Book
+     */
+    public function setCreated(\DateTimeInterface $created): Book
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface
      */
     public function getDeleted(): ?\DateTimeInterface
     {
@@ -83,33 +101,15 @@ class Book implements BookViewInterface
     }
 
     /**
-     * @param mixed $deleted
-     * @return self
+     * @param \DateTimeInterface $deleted
+     * @return Book
      */
-    public function deletedAt($deleted): self
+    public function setDeleted(\DateTimeInterface $deleted): Book
     {
         $this->deleted = $deleted;
-
         return $this;
     }
-    /**
-     * @return mixed
-     */
-    public function getCreated(): ?\DateTime
-    {
-        return $this->created;
-    }
 
-    /**
-     * @param  \DateTimeInterface $created
-     * @return self
-     */
-    public function createdAt(\DateTimeInterface $created): self
-    {
-        $this->created = $created;
-
-        return $this;
-    }
     /**
      * @return mixed
      */
