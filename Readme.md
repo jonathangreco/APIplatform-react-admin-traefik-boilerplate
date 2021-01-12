@@ -21,7 +21,8 @@ to use and develop on.
 ## Installation
 I advise you rename it when cloning :
 - `git clone git@github.com:jonathangreco/APIplatform-react-admin-traefik-boilerplate.git`
-- `cd <whatever you put for a name>`
+- `cd <whatever you put for a name>
+- Do a little customization on your containers (including mysql DB names and password)
 - `make start`
 - Go get a tea.
 - Cleanup Book stuff (dummy example) when you ready to code your app
