@@ -56,7 +56,7 @@ JWT_PASSPHRASE=9c1f2e2fa339bfe93b094b5b1e2f9b4f
 
 ### admin.docker.localhost (require auth)
 - Apply migrations (make migrate)
-- Create your ROLE in the DB (ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN)
+- Create your ROLE in the DB (ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN) you can find an SQL file in `api/.docker/mysql/data`
 - create a user first then log in there
 
 ### front.docker.localhost
