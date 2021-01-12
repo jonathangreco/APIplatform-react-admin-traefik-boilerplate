@@ -15,6 +15,9 @@ build-admin: ## Allow from the first install to build the container
 start: ## spin up all container or specific one with c=<container_name>
 	make build-client && make build-admin && docker-compose up -d ${c}
 
+up: ##shortcut for start
+	docker-compose up -d
+
 bash: ## bash in the php (api) container
 	docker exec -it $(php_container_id) bash
 
